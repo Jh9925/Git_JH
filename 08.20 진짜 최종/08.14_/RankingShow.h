@@ -8,13 +8,15 @@
 
 using namespace std;
 
-struct RNKINFO {
+struct RNKINFO 
+{
     char* name;
     int score;
     RNKINFO* next;
 };
 
-struct LINKEDLIST {
+struct LINKEDLIST 
+{
     RNKINFO* cur;
     RNKINFO* head;
     RNKINFO* tail;
@@ -34,12 +36,14 @@ void TextColor2(int font, int backGround)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Color);
 
 }
-void RankingShow() {
+void RankingShow() 
+{
     // system("mode con: cols=50 lines=50");
     system("title Ranking View");
 
     ifstream file("Save/ranking.rnk");
-    if (!file.is_open()) {
+    if (!file.is_open()) 
+    {
         MessageBox(NULL, TEXT("Failed to open the file."), NULL, NULL);
         return;
     }
@@ -49,7 +53,8 @@ void RankingShow() {
     lnk->head = nullptr;
     lnk->tail = nullptr;
 
-    while (!file.eof()) {
+    while (!file.eof()) 
+    {
         char tempName[50] = { 0 };
         int tempScore = 0;
         file >> tempName >> tempScore;  // Read from file
@@ -60,7 +65,8 @@ void RankingShow() {
     printScore(lnk);  // Sort and print list
     system("pause");
 
-    while (lnk->head != nullptr && lnk->head->next != nullptr) {
+    while (lnk->head != nullptr && lnk->head->next != nullptr) 
+    {
         deleteLastNode(lnk);
     }
 
@@ -68,25 +74,31 @@ void RankingShow() {
     Sleep(1000);
 }
 
-void printScore(LINKEDLIST* lnk) {
+void printScore(LINKEDLIST* lnk) 
+{
     RNKINFO* cur = lnk->head;
     int cnt = 0;
 
-    while (cur != nullptr) {
+    while (cur != nullptr) 
+    {
         cnt++;
         cur = cur->next;
     }
 
     RNKINFO** ptr = new RNKINFO * [cnt];
     cur = lnk->head;
-    for (int i = 0; i < cnt; i++) {
+    for (int i = 0; i < cnt; i++) 
+    {
         ptr[i] = cur;
         cur = cur->next;
     }
 
-    for (int i = 0; i < cnt - 1; i++) {
-        for (int j = i + 1; j < cnt; j++) {
-            if (ptr[i]->score < ptr[j]->score) {
+    for (int i = 0; i < cnt - 1; i++) 
+    {
+        for (int j = i + 1; j < cnt; j++) 
+        {
+            if (ptr[i]->score < ptr[j]->score) 
+            {
                 RNKINFO* temp = ptr[i];
                 ptr[i] = ptr[j];
                 ptr[j] = temp;
@@ -108,7 +120,8 @@ void printScore(LINKEDLIST* lnk) {
     delete[] ptr;  // Free allocated memory
 }
 
-void insertData(LINKEDLIST* lnk, const char* name, int score) {
+void insertData(LINKEDLIST* lnk, const char* name, int score) 
+{
     RNKINFO* newRNK = new RNKINFO();
     // 새 이름을 저장할 버퍼의 크기를 정확히 지정
     size_t nameLen = strlen(name);
@@ -119,24 +132,29 @@ void insertData(LINKEDLIST* lnk, const char* name, int score) {
     newRNK->score = score;
     newRNK->next = nullptr;
 
-    if (lnk->head == nullptr && lnk->tail == nullptr) {
+    if (lnk->head == nullptr && lnk->tail == nullptr) 
+    {
         lnk->head = lnk->tail = newRNK;
     }
-    else {
+    else 
+    {
         lnk->tail->next = newRNK;
         lnk->tail = newRNK;
     }
 }
 
-void deleteLastNode(LINKEDLIST* lnk) {
-    if (lnk->head == nullptr || lnk->head->next == nullptr) {
+void deleteLastNode(LINKEDLIST* lnk) 
+{
+    if (lnk->head == nullptr || lnk->head->next == nullptr) 
+    {
         delete lnk->head;
         lnk->head = lnk->tail = nullptr;
         return;
     }
 
     RNKINFO* cur = lnk->head;
-    while (cur->next->next != nullptr) {
+    while (cur->next->next != nullptr) 
+    {
         cur = cur->next;
     }
 

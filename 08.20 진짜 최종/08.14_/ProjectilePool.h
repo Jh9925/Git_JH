@@ -25,14 +25,16 @@ public:
         return nullptr;
     }
 
-    void update() {
+    void update() 
+    {
         for (auto& p : pool) 
         {
             p.update();
         }
     }
 
-    void draw() {
+    void draw() 
+    {
         for (auto& p : pool) 
         {
             p.draw();
